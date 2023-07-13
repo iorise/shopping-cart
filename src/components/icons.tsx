@@ -3,6 +3,9 @@ import {
     Menu,
     ChevronLeft,
     ChevronRight,
+    Loader2,
+    Check,
+    Plus,
 } from "lucide-react"
 
 export const Icons = {
@@ -10,4 +13,7 @@ export const Icons = {
     menu: Menu,
     chevronLeft: ChevronLeft,
     chevronRight: ChevronRight,
+    spinner: Loader2,
+    check: Check,
+    add: Plus
 }
