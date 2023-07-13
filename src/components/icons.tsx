@@ -1,9 +1,13 @@
 import {
     ShoppingCart,
-    Menu
+    Menu,
+    ChevronLeft,
+    ChevronRight,
 } from "lucide-react"
 
 export const Icons = {
     shoppingCart: ShoppingCart,
-    menu: Menu
+    menu: Menu,
+    chevronLeft: ChevronLeft,
+    chevronRight: ChevronRight,
 }
