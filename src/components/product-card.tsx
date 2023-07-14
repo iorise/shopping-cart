@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { Product } from "@/api";
+import type { Product } from "@/types"
 import useFetchData from "@/api";
 
 import * as React from "react";
@@ -20,6 +20,7 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { useCart } from "@/context/cart-context";
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
   product: Product;
@@ -36,8 +37,16 @@ export function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
-  const { addToCart } = useFetchData();
-  const [isPending, startTransiton] = React.useTransition();
+  const [isPending, startTransition] = React.useTransition();
+
+  const { addToCart, cartItems } = useCart();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart(product);
+  };
+
+  const isProductInCart = cartItems.some((item) => item.product.id === product.id);
+
   return (
     <Card
       className={cn("h-full overflow-hidden rounded-sm", className)}
@@ -79,7 +88,9 @@ export function ProductCard({
         href={`/product/${product.id}`}
       >
         <CardContent className="grid gap-2.5 p-4">
-          <CardTitle className="line-clamp-1">{product.title}</CardTitle>
+          <CardTitle className="line-clamp-1 text-base">
+            {product.title}
+          </CardTitle>
           <CardDescription className="line-clamp-2">
             {product.price}
           </CardDescription>
@@ -104,31 +115,19 @@ export function ProductCard({
               size="sm"
               className="h-8 w-full rounded-sm"
               onClick={() => {
-                startTransiton(async () => {
-                  try {
-                    await addToCart(product.id, 1);
-                    toast.success("Added to cart.");
-                  } catch (error) {
-                    error instanceof Error
-                      ? toast.error(error.message)
-                      : toast.error("Something went wrong, please try again");
-                  }
-                });
+                handleAddToCart(product);
               }}
+              disabled={isProductInCart}
             >
-              Add to cart
+              {isProductInCart ? "Added" : "Add to cart"}
             </Button>
           </div>
         ) : (
           <Button
-            aria-label={isAddedToCart ? "Remove from cart" : "Add to cart"}
+            aria-label={isProductInCart ? "Remove from cart" : "Add to cart"}
             size="sm"
             className="h-8 w-full rounded-sm"
-            onClick={() => {
-              startTransiton(async () => {
-                await onSwitch?.();
-              });
-            }}
+            onClick={() => handleAddToCart(product)}
             disabled={isPending}
           >
             {isPending ? (
@@ -136,12 +135,12 @@ export function ProductCard({
                 className="mr-2 h-4 animate-spin"
                 aria-hidden="true"
               />
-            ) : isAddedToCart ? (
+            ) : isProductInCart ? (
               <Icons.check className="mr-2 h-4 w-4" aria-hidden="true" />
             ) : (
               <Icons.add className="mr-2 h-4 w-4" aria-hidden="true" />
             )}
-            {isAddedToCart ? "Added" : "Add to cart"}
+            {isProductInCart ? "Added" : "Add to cart"}
           </Button>
         )}
       </CardFooter>
