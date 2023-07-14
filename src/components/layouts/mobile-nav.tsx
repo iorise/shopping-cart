@@ -48,7 +48,7 @@ export function MobileNav({ mainNavItems }: MobileNavProps) {
             {mainNavItems?.map((item, index) => item.href && (
               <React.Fragment>
                 <div
-                  className="flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline hover:cursor-pointer"
+                  className="flex flex-1 items-center justify-between py-4 font-medium text-sm transition-all hover:underline hover:cursor-pointer"
                   key={index}
                 >
                   <Link href={item.href}>{item.title}</Link>

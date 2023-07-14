@@ -18,6 +18,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import CartSheet from "../cart/cart-sheet";
 
 interface MainNavProps {
   mainNavItems?: MainNavItem[];
@@ -39,17 +40,21 @@ export function MainNav({ mainNavItems }: MainNavProps) {
 
       <NavigationMenu>
         <NavigationMenuList>
-          {mainNavItems?.map((item) => item.href && (
-            <NavigationMenuItem key={item.title}>
-              <Link href={item.href} legacyBehavior passHref>
-                <NavigationMenuLink
-                  className={cn(navigationMenuTriggerStyle(), "text-base")}
-                >
-                  {item.title}
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          ))}
+          {mainNavItems?.map(
+            (item) =>
+              item.href && (
+                <NavigationMenuItem key={item.title}>
+                  <Link href={item.href} legacyBehavior passHref>
+                    <NavigationMenuLink
+                      className={cn(navigationMenuTriggerStyle(), "text-sm")}
+                    >
+                      {item.title}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              )
+          )}
+          <CartSheet/>
         </NavigationMenuList>
       </NavigationMenu>
     </div>
