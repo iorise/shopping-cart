@@ -23,3 +23,10 @@ export function slugify(str: string) {
 export function unslugify(str: string) {
   return str.replace(/-/g, " ")
 }
+
+export function formatPrice(price: number): string {
+  return price.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+}

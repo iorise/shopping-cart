@@ -54,7 +54,6 @@ export function MainNav({ mainNavItems }: MainNavProps) {
                 </NavigationMenuItem>
               )
           )}
-          <CartSheet/>
         </NavigationMenuList>
       </NavigationMenu>
     </div>
