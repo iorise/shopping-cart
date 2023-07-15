@@ -8,30 +8,34 @@ export interface Product {
   price: number;
   category: string;
   image: string;
+  description: string;
 }
 
 export interface CartItem {
-  productId: number
-  quantity: number
+  productId: number;
+  quantity: number;
 }
 
-const useFetchData = (): {
-  data: Product[] | null;
+const useFetchData = (
+  category?: string
+): {
+  data: Product[];
   isLoading: boolean;
   error: string | null;
-  addToCart: (productId: number, quantity: number) => void
-  cart: CartItem[]
 } => {
-  const [data, setData] = useState<Product[] | null>(null);
+  const [data, setData] = useState<Product[]>([]);
   const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [cart, setCart] = useState<CartItem[]>([])
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const res = await fetch("https://fakestoreapi.com/products");
+        let url = "https://fakestoreapi.com/products";
+        if (category) {
+          url += `/category/${encodeURIComponent(category)}`;
+        }
+        const res = await fetch(url);
         if (!res.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -45,25 +49,9 @@ const useFetchData = (): {
     };
 
     fetchData();
-  }, []);
+  }, [category]);
 
-  const addToCart = (productId: number, quantity: number) => {
-    const existingCartItem = cart.find((item) => item.productId === productId)
-
-    if (existingCartItem) {
-      const updatedCart = cart.map((item) => {
-        if (item.productId === productId) {
-          return { ...item, quantity: item.quantity + quantity}
-        }
-        return item
-      })
-      setCart (updatedCart)
-    } else {
-      setCart([...cart, { productId, quantity }])
-    }
-  }
-
-  return { data, isLoading, error, addToCart, cart };
+  return { data, isLoading, error };
 };
 
 export default useFetchData;
