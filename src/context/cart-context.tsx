@@ -11,6 +11,7 @@ interface CartContextValue {
   updateCartItemQuantity: (productId: number, quantity: number) => void;
   cartTotal: number;
   cartCount: number;
+  data: Product[]
 }
 
 const CartContext = createContext<CartContextValue>({
@@ -20,6 +21,7 @@ const CartContext = createContext<CartContextValue>({
   updateCartItemQuantity: () => {},
   cartTotal: 0,
   cartCount: 0,
+  data: []
 });
 
 export const useCart = () => {
@@ -106,6 +108,7 @@ export const CartProvider = ({ children }: Props) => {
         updateCartItemQuantity,
         cartTotal,
         cartCount,
+        data
       }}
     >
       {children}

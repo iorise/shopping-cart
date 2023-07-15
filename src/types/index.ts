@@ -20,8 +20,9 @@ export type MainNavItem = NavItemWithOptionalChildren;
 export type SidebarNavItem = NavItemWithChildren;
 
 export type StoredFile = {
-  url: string;
-  title: string;
+  id: number
+  title: string
+  image: string
 };
 
 export type Option = {

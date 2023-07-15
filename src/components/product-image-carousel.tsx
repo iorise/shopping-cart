@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { type StoredFile } from "@/types";
+import { StoredFile } from "@/types";
 import useEmblaCarousel, {
-  type EmblaOptionsType,
-  type EmblaCarouselType,
+  EmblaOptionsType,
+  EmblaCarouselType,
 } from "embla-carousel-react";
 
 import { cn } from "@/lib/utils";
@@ -17,7 +17,7 @@ interface ProductImageCarouselProps
     React.HTMLAttributes<HTMLDivElement>,
     HTMLDivElement
   > {
-  images: StoredFile[];
+  images: StoredFile[] | string;
   options?: EmblaOptionsType;
 }
 
@@ -52,7 +52,7 @@ export function ProductImageCarousel({
     (event: React.KeyboardEvent<HTMLButtonElement>) => {
       if (event.key === "ArrowLeft") {
         scrollPrev();
-      } else if (event.key === "Arrow Right") {
+      } else if (event.key === "ArrowRight") {
         scrollNext();
       }
     },
@@ -73,8 +73,8 @@ export function ProductImageCarousel({
     emblaApi.on("select", onSelect);
   }, [emblaApi, onSelect]);
 
-  if (images.length === 0) {
-    return <div></div>;
+  if (typeof images === "string" || (Array.isArray(images) && images.length === 0)) {
+    return <div>No images available.</div>;
   }
 
   return (
@@ -97,8 +97,8 @@ export function ProductImageCarousel({
                 role="group"
                 key={index}
                 aria-roledescription="slide"
-                src={image.url}
-                alt={image.name}
+                src={image.image}
+                alt={image.title}
                 width={500}
                 height={500}
                 className="aspect-square w-full object-cover"
@@ -116,7 +116,6 @@ export function ProductImageCarousel({
             disabled={prevBtnDisabled}
             onClick={scrollPrev}
           >
-            {" "}
             <Icons.chevronLeft
               className="h-3 w-3 sm:h-4 sm:w-4"
               aria-hidden="true"
@@ -137,8 +136,8 @@ export function ProductImageCarousel({
             >
               <div className="absolute inset-0 z-10 bg-zinc-950/20 group-hover:bg-zinc-950/40" />
               <Image
-                src={image.url}
-                alt={image.name}
+                src={image.image}
+                alt={image.title}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 fill
               />
