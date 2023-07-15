@@ -2,10 +2,14 @@ import "@/styles/globals.css";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
+import { CartProvider } from "@/context/cart-context";
 
 import { Poppins } from "next/font/google";
 
-const poppins = Poppins({ weight:["100", "200", "300", "400", "500", "600", "700", "800", "900"], subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <CartProvider>
     <html lang="en">
       <body className={poppins.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
@@ -25,5 +30,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </CartProvider>
   );
 }
