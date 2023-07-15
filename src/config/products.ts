@@ -1,3 +1,5 @@
+import { Product } from "@/api";
+
 export const sortOptions = [
   {
     label: "Date: Old to new",
@@ -25,30 +27,25 @@ export const sortOptions = [
   },
 ];
 
-export const productCategories = [
+export const productCategories: {
+  title: Product["category"];
+  href: Product["category"];
+  description: string;
+}[] = [
   {
     title: "Products",
     href: "/products",
-    description: "Find a wide selection of products that are attractive and according to your needs."
+    description:
+      "Find a wide selection of products that are attractive and according to your needs.",
   },
   {
     title: "Electronics",
-    href: "/category/electronics",
-    description: ""
+    href: "/categories/electronics",
+    description: "",
   },
   {
-    title: "Jewelry",
-    href: "/category/jewelry",
-    description: ""
-  },
-  {
-    title: "Men's Clothing",
-    href: "/category/mens-clothing",
-    description: ""
-  },
-  {
-    title: "Women's Clothing",
-    href: "/category/womens-clothing",
-    description: ""
+    title: "Jewelery",
+    href: "/categories/jewelery",
+    description: "",
   },
 ];

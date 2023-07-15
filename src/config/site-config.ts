@@ -5,9 +5,10 @@ export type SiteConfig = typeof siteConfig;
 
 const links = {
   twitter: "https://twitter.com/ioriya3",
-  github: "https://github.com/sadmann7",
+  github: "https://github.com/iorise",
   discord: "https://discord.com/users/iori",
   facebook: "https://www.facebook.com/profile.php?id=100025999413205",
+  rickroll: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 };
 
 export const siteConfig = {
@@ -21,18 +22,13 @@ export const siteConfig = {
           items: [],
         },
         {
-          title: "Jewelry",
-          href: "/category/jewelry",
+          title: "Jewelery",
+          href: "/categories/jewelery",
           items: [],
         },
         {
           title: "Electronics",
-          href: "/category/electronics",
-          items: [],
-        },
-        {
-          title: "Clothing",
-          href: "/category/clothing",
+          href: "/categories/electronics",
           items: [],
         },
       ],
@@ -42,4 +38,27 @@ export const siteConfig = {
       href: category.href,
     })),
   ] as MainNavItem[],
+
+  footer: [
+    {
+      title: "Twitter",
+      href: links.twitter,
+      external: "true",
+    },
+    {
+      title: "Github",
+      href: links.discord,
+      external: true,
+    },
+    {
+      title: "Facebook",
+      href: links.facebook,
+      external: true,
+    },
+    {
+      title: "Youtube",
+      href: links.rickroll,
+      external: true,
+    },
+  ],
 };
