@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { MainNavItem, SidebarNavItem } from "@/types";
@@ -11,14 +10,12 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { ScrollArea } from "../ui/scroll-area";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
-import { Accordion, AccordionItem, AccordionTrigger } from "../ui/accordion";
 
 interface MobileNavProps {
   mainNavItems?: MainNavItem[];
 }
 
 export function MobileNav({ mainNavItems }: MobileNavProps) {
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>

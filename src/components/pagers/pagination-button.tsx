@@ -18,7 +18,6 @@ interface PaginationButtonProps
   router: AppRouterInstance;
   pathname: string;
   isPending: boolean;
-  startTransition: React.TransitionStartFunction;
   siblingCount?: number;
 }
 
@@ -31,7 +30,6 @@ export function PaginationButton({
   router,
   pathname,
   isPending,
-  startTransition,
   siblingCount = 1,
   className,
   ...props
@@ -63,6 +61,16 @@ export function PaginationButton({
     return range;
   }, [pageCount, page, siblingCount]);
 
+  const handlePageClick = (pageNumber: number) => {
+    router.push(
+      `${pathname}?${createQueryString({
+        page: pageNumber,
+        per_page: per_page ?? null,
+        sort,
+      })}`
+    );
+  };
+
   return (
     <div
       className={cn(
@@ -75,17 +83,7 @@ export function PaginationButton({
         variant="outline"
         size="icon"
         className="h-8 w-8"
-        onClick={() => {
-          startTransition(() => {
-            router.push(
-              `${pathname}?${createQueryString({
-                page: 1,
-                per_page: per_page ?? null,
-                sort,
-              })}`
-            );
-          });
-        }}
+        onClick={() => handlePageClick(1)}
         disabled={Number(page) === 1 || isPending}
       >
         <Icons.chevronsLeft className="h-5 w-5" aria-hidden="true" />
@@ -95,17 +93,7 @@ export function PaginationButton({
         variant="outline"
         size="icon"
         className="h-8 w-8"
-        onClick={() => {
-          startTransition(() => {
-            router.push(
-              `${pathname}?${createQueryString({
-                page: Number(page) - 1,
-                per_page: per_page ?? null,
-                sort,
-              })}`
-            );
-          });
-        }}
+        onClick={() => handlePageClick(Number(page) - 1)}
         disabled={Number(page) === 1 || isPending}
       >
         <Icons.chevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -149,17 +137,7 @@ export function PaginationButton({
         variant="outline"
         size="icon"
         className="h-8 w-8"
-        onClick={() => {
-          startTransition(() => {
-            router.push(
-              `${pathname}?${createQueryString({
-                page: Number(page) + 1,
-                per_page: per_page ?? null,
-                sort,
-              })}`
-            );
-          });
-        }}
+        onClick={() => handlePageClick(Number(page) + 1)}
         disabled={Number(page) === (pageCount ?? 10) || isPending}
       >
         <Icons.chevronRight className="h-5 w-5" aria-hidden="true" />

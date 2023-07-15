@@ -45,7 +45,7 @@ export function Products({ products, pageCount, category }: ProductsProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = React.useTransition();
+  const [isPending, startTransition] = React.useState<boolean>(false);
 
   // Search params
   const page = searchParams?.get("page") ?? "1";
@@ -76,32 +76,18 @@ export function Products({ products, pageCount, category }: ProductsProps) {
   >([0, 99999999]);
   const debouncePrice = useDebounce(priceRangeValue, 9999999);
 
-  // React.useEffect(() => {
-  //   const [min, max] = debouncePrice;
-  //   const priceRangeParam = searchParams?.get("price_range");
-  //   if (priceRangeParam)
-  //     startTransition(() => {
-  //       router.push(
-  //         `${pathname}?${createQueryString({
-  //           price_range: `${min}-${max}`,
-  //         })}`
-  //       );
-  //     });
-  // }, [debouncePrice]);
-
   // Category filter
   const [selectedCategories, setSelectedCategories] = React.useState<
     Option[] | null
   >(null);
+
   React.useEffect(() => {
     if (selectedCategories !== null) {
-      startTransition(() => {
-        const categoryValues = selectedCategories?.length
-          ? selectedCategories.map((c) => c.value).join(",")
-          : null;
-        const queryString = createQueryString({ categories: categoryValues });
-        router.push(`${pathname}?${queryString}`);
-      });
+      const categoryValues = selectedCategories?.length
+        ? selectedCategories.map((c) => c.value).join(",")
+        : null;
+      const queryString = createQueryString({ categories: categoryValues });
+      router.push(`${pathname}?${queryString}`);
     }
   }, [selectedCategories]);
 
@@ -171,17 +157,15 @@ export function Products({ products, pageCount, category }: ProductsProps) {
                 size="sm"
                 className="w-full"
                 onClick={() => {
-                  startTransition(() => {
-                    router.push(
-                      `${pathname}?${createQueryString({
-                        price_range: null,
-                        categories: null,
-                      })}`
-                    );
-
-                    setPriceRangeValue([0, 500]);
-                    setSelectedCategories(null);
-                  });
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      price_range: null,
+                      categories: null,
+                    })}`
+                  );
+              
+                  setPriceRangeValue([0, 500]);
+                  setSelectedCategories(null);
                 }}
                 disabled={isPending}
               >
@@ -210,13 +194,11 @@ export function Products({ products, pageCount, category }: ProductsProps) {
                 key={option.label}
                 className={cn(option.value === sort && "font-bold")}
                 onClick={() => {
-                  startTransition(() => {
-                    router.push(
-                      `${pathname}?${createQueryString({
-                        sort: option.value,
-                      })}`
-                    );
-                  });
+                  router.push(
+                    `${pathname}?${createQueryString({
+                      sort: option.value,
+                    })}`
+                  );
                 }}
               >
                 {option.label}
@@ -248,7 +230,6 @@ export function Products({ products, pageCount, category }: ProductsProps) {
           router={router}
           pathname={pathname}
           isPending={isPending}
-          startTransition={startTransition}
         />
       ) : null}
     </div>
