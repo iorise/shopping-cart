@@ -6,6 +6,12 @@ import {
     Loader2,
     Check,
     Plus,
+    ChevronDown,
+    ChevronsLeft,
+    ChevronsRight,
+    Image,
+    Trash2,
+    Search,
 } from "lucide-react"
 
 export const Icons = {
@@ -15,5 +21,11 @@ export const Icons = {
     chevronRight: ChevronRight,
     spinner: Loader2,
     check: Check,
-    add: Plus
+    add: Plus,
+    chevronDown: ChevronDown,
+    chevronsLeft: ChevronsLeft,
+    chevronsRight: ChevronsRight,
+    placeholder: Image,
+    trash: Trash2,
+    search: Search
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import type { Product } from "@/types"
+import { cn, formatPrice } from "@/lib/utils";
+import type { Product } from "@/types";
 import useFetchData from "@/api";
 
 import * as React from "react";
@@ -45,7 +45,9 @@ export function ProductCard({
     addToCart(product);
   };
 
-  const isProductInCart = cartItems.some((item) => item.product.id === product.id);
+  const isProductInCart = cartItems.some(
+    (item) => item.product.id === product.id
+  );
 
   return (
     <Card
@@ -92,7 +94,7 @@ export function ProductCard({
             {product.title}
           </CardTitle>
           <CardDescription className="line-clamp-2">
-            {product.price}
+            {formatPrice(product.price)}
           </CardDescription>
         </CardContent>
       </Link>
