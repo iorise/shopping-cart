@@ -1,11 +1,9 @@
-"use client";
+"use client"
 
 import React from "react";
-import Image from "next/image";
 
 import { Shell } from "@/components/Shells/shell";
-import { siteConfig } from "@/config/site-config";
-import SiteHeader from "@/components/layouts/site-header";
+import { siteConfig } from "@/config/site-config"
 import useFetchData from "@/api";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";

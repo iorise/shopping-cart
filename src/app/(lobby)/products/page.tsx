@@ -8,10 +8,6 @@ import { Products } from "@/components/products";
 import useFetchData from "@/api";
 import ProductsLoading from "./loading";
 
-export const metadata: Metadata = {
-  title: "Products",
-};
-
 interface ProductsPageProps {
   searchParams: {
     [key: string]: string | string[] | undefined;
