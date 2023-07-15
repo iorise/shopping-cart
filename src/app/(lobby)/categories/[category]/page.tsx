@@ -16,13 +16,6 @@ interface CategoryPageProps {
   };
 }
 
-export function generateMetadata({ params }: CategoryPageProps) {
-  return {
-    title: toTitleCase(params.category),
-    description: `Buy products from the ${params.category} category`,
-  };
-}
-
 export default function CategoryPage({
   params,
   searchParams,
