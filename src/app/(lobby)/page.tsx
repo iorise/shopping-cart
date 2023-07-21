@@ -1,15 +1,11 @@
-"use client"
-
-import React from "react";
-
 import { Shell } from "@/components/Shells/shell";
 import { siteConfig } from "@/config/site-config"
-import useFetchData from "@/api";
+import getProduct from "../action/get-product";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-const HomePage = () => {
-  const { data } = useFetchData();
+export default async function HomePage() {
+  const data  = await getProduct()
   const products = data.slice(0, 4);
   return (
     <Shell as="div" className="gap-12">
@@ -47,5 +43,3 @@ const HomePage = () => {
     </Shell>
   );
 };
-
-export default HomePage;

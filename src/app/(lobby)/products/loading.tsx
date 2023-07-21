@@ -9,7 +9,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Icons } from "@/components/icons";
 
-export default function ProductsLoading() {
+export default function Loading() {
   return (
     <Shell>
       <div className="space-y-2">

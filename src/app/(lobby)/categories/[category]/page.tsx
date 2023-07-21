@@ -1,6 +1,5 @@
-"use client";
-
-import useFetchData, { Product } from "@/api";
+import { Product } from "@/types";
+import getProduct from "@/app/action/get-product";
 import { Shell } from "@/components/Shells/shell";
 import { Header } from "@/components/header";
 import { Products } from "@/components/products";
@@ -16,13 +15,13 @@ interface CategoryPageProps {
   };
 }
 
-export default function CategoryPage({
+export default async function CategoryPage({
   params,
   searchParams,
 }: CategoryPageProps) {
   const { category } = params;
-  const { page, per_page, sort, price_range } = searchParams;
-  const { data, isLoading } = useFetchData(category);
+  const { page, per_page, sort } = searchParams;
+  const data = await getProduct()
 
   const products = data.filter((product) => product.category === category);
   const limit = typeof per_page === "string" ? parseInt(per_page) : 8;
@@ -33,9 +32,6 @@ export default function CategoryPage({
 
   return (
     <div>
-      {isLoading ? (
-        <ProductsLoading />
-      ) : (
         <Shell>
           <Header
             title={toTitleCase(category)}
@@ -51,7 +47,6 @@ export default function CategoryPage({
             sort={typeof sort === "string" ? sort : undefined}
           />
         </Shell>
-      )}
     </div>
   );
 }

@@ -1,12 +1,7 @@
-"use client";
-
-import { type Metadata } from "next";
-
 import { Header } from "@/components/header";
 import { Shell } from "@/components/Shells/shell";
 import { Products } from "@/components/products";
-import useFetchData from "@/api";
-import ProductsLoading from "./loading";
+import getProduct from "@/app/action/get-product";
 
 interface ProductsPageProps {
   searchParams: {
@@ -14,10 +9,10 @@ interface ProductsPageProps {
   };
 }
 
-export default function ProductsPage({ searchParams }: ProductsPageProps) {
-  const { page, per_page, sort, categories, price_range } = searchParams;
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+  const { page, per_page, sort, categories } = searchParams;
 
-  const { data, isLoading } = useFetchData();
+  const data = await getProduct()
 
   const limit = typeof per_page === "string" ? parseInt(per_page) : 8;
   const offset = typeof page === "string" ? (parseInt(page) - 1) * limit : 0;
@@ -27,9 +22,6 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
 
   return (
     <div>
-      {isLoading ? (
-        <ProductsLoading />
-      ) : (
         <Shell>
           <Header
             title="Products"
@@ -45,7 +37,7 @@ export default function ProductsPage({ searchParams }: ProductsPageProps) {
             sort={typeof sort === "string" ? sort : undefined}
           />
         </Shell>
-      )}
+      
     </div>
   );
 }
