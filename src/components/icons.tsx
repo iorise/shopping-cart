@@ -27,5 +27,5 @@ export const Icons = {
     chevronsRight: ChevronsRight,
     placeholder: Image,
     trash: Trash2,
-    search: Search
+    search: Search,
 }

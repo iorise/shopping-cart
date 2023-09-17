@@ -1,5 +1,4 @@
 import type { MainNavItem } from "@/types";
-import { productCategories } from "./products";
 
 export type SiteConfig = typeof siteConfig;
 
@@ -11,32 +10,40 @@ const links = {
   rickroll: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 };
 
+export const sortOptions = [
+  {
+    label: "Date: Old to new",
+    value: "asc",
+  },
+  {
+    label: "Date: New to old",
+    value: "desc",
+  },
+];
+
 export const siteConfig = {
   name: "Shoppingcart",
   mainNav: [
     {
-      items: [
-        {
-          title: "Products",
-          href: "/products",
-          items: [],
-        },
-        {
-          title: "Jewelery",
-          href: "/categories/jewelery",
-          items: [],
-        },
-        {
-          title: "Electronics",
-          href: "/categories/electronics",
-          items: [],
-        },
-      ],
+      title: "Products",
+      href: "/products",
     },
-    ...productCategories.map((category) => ({
-      title: category.title,
-      href: category.href,
-    })),
+    {
+      title: "Jewelery",
+      href: "/categories/jewelery",
+    },
+    {
+      title: "Electronics",
+      href: "/categories/electronics",
+    },
+    {
+      title: "women's clothing",
+      href: "/categories/women's clothing",
+    },
+    {
+      title: "men's clothing",
+      href: "/categories/men's clothing",
+    }
   ] as MainNavItem[],
 
   footer: [

@@ -2,47 +2,43 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { Product } from "@/types";
 import { useRouter } from "next/navigation";
 import * as React from "react";
-import useFetchData from "@/api";
 import { Button } from "./ui/button";
 import { Icons } from "./icons";
 import {
   CommandDialog,
   CommandEmpty,
-  CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
 } from "./ui/command";
 import { Skeleton } from "./ui/skeleton";
+import { getProducts } from "@/app/(routes)/products/page";
 
 export function Combobox() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [query, setQuery] = React.useState("");
   const debouncedQuery = useDebounce(query, 300);
-  const [data, setData] = React.useState<
-    | {
-        category: Product["category"];
-        products: Pick<Product, "id" | "title" | "category">[];
-      }[]
-    | null
-  >(null);
+  const [products, setProducts] = React.useState<Product[]>([]);
 
-  const { data: fetchData, isLoading } = useFetchData();
+  const fetchData = async () => {
+    setIsLoading(true);
+    const products = await getProducts();
+    setIsLoading(false);
+    setProducts(products as Product[]); // Simpan produk dalam state
+  };
 
-  const filterProducts = (query: string, fetchData: Product[]) => {
-    const filteredData = fetchData.filter((product) =>
+  React.useEffect(() => {
+    fetchData();
+  }, []);
+
+  const filterProducts = (query: string, products: Product[]) => {
+    const filteredData = products.filter((product) =>
       product.title.toLowerCase().includes(query.toLowerCase())
     );
 
-    const groupedData = Array.from(
-      new Set(filteredData.map((product) => product.category))
-    ).map((category) => ({
-      category,
-      products: filteredData.filter((product) => product.category === category),
-    }));
-
-    return groupedData;
+    return filteredData;
   };
 
   const handleSelect = (productId: number) => {
@@ -56,14 +52,7 @@ export function Combobox() {
     }
   }, [isOpen]);
 
-  React.useEffect(() => {
-    if (debouncedQuery.length === 0) {
-      setData(null);
-    } else {
-      const filteredData = filterProducts(debouncedQuery, fetchData);
-      setData(filteredData);
-    }
-  }, [debouncedQuery, fetchData]);
+  const filteredData = filterProducts(debouncedQuery, products);
 
   return (
     <>
@@ -84,29 +73,21 @@ export function Combobox() {
           value={query}
           onValueChange={setQuery}
         />
-         <CommandList>
+        <CommandList>
           {isLoading ? (
             <div className="space-y-1 overflow-hidden px-1 py-2">
               <Skeleton className="h-4 w-10 rounded" />
               <Skeleton className="h-8 rounded-sm" />
               <Skeleton className="h-8 rounded-sm" />
             </div>
-          ) : data && data.length > 0 ? (
-            data.map((group) => (
-              <CommandGroup
-                key={group.category}
-                title={group.category}
-                className="capitalize"
+          ) : filteredData && filteredData.length > 0 ? (
+            filteredData.map((product) => (
+              <CommandItem
+                key={product.id}
+                onSelect={() => handleSelect(product.id)}
               >
-                {group.products.map((item) => (
-                  <CommandItem
-                    key={item.id}
-                    onSelect={() => handleSelect(item.id)}
-                  >
-                    {item.title}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
+                {product.title}
+              </CommandItem>
             ))
           ) : (
             <CommandEmpty className="py-6 text-center text-sm">

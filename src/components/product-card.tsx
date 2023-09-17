@@ -2,13 +2,11 @@
 
 import { cn, formatPrice } from "@/lib/utils";
 import type { Product } from "@/types";
-import useFetchData from "@/api";
 
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-import { toast } from "sonner";
 import { AspectRatio } from "./ui/aspect-ratio";
 import { Icons } from "./icons";
 import { Button, buttonVariants } from "./ui/button";
@@ -37,7 +35,6 @@ export function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
-  const [isPending, startTransition] = React.useTransition();
 
   const { addToCart, cartItems } = useCart();
 
@@ -103,7 +100,7 @@ export function ProductCard({
           <div className="flex w-full flex-col items-center gap-2 sm:flex-row sm:justify-between">
             <Link
               aria-label="Preview product"
-              href={`/product-preview/${product.id}`}
+              href={`/product/${product.id}`}
               className={buttonVariants({
                 variant: "outline",
                 size: "sm",
@@ -119,9 +116,8 @@ export function ProductCard({
               onClick={() => {
                 handleAddToCart(product);
               }}
-              disabled={isProductInCart}
             >
-              {isProductInCart ? "Added" : "Add to cart"}
+              Add to cart
             </Button>
           </div>
         ) : (
@@ -130,19 +126,8 @@ export function ProductCard({
             size="sm"
             className="h-8 w-full rounded-sm"
             onClick={() => handleAddToCart(product)}
-            disabled={isPending}
           >
-            {isPending ? (
-              <Icons.spinner
-                className="mr-2 h-4 animate-spin"
-                aria-hidden="true"
-              />
-            ) : isProductInCart ? (
-              <Icons.check className="mr-2 h-4 w-4" aria-hidden="true" />
-            ) : (
-              <Icons.add className="mr-2 h-4 w-4" aria-hidden="true" />
-            )}
-            {isProductInCart ? "Added" : "Add to cart"}
+            Add to cart
           </Button>
         )}
       </CardFooter>

@@ -11,7 +11,6 @@ import { Badge } from "../ui/badge";
 import { Icons } from "../icons";
 import { Separator } from "../ui/separator";
 import { ScrollArea } from "../ui/scroll-area";
-import Image from "next/image";
 import { useCart } from "@/context/cart-context";
 import { CartItem } from "./cart-item";
 

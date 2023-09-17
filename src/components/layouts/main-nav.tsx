@@ -11,14 +11,11 @@ import { siteConfig } from "@/config/site-config";
 
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import CartSheet from "../cart/cart-sheet";
 
 interface MainNavProps {
   mainNavItems?: MainNavItem[];

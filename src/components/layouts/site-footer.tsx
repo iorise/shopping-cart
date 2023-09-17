@@ -7,7 +7,7 @@ export default function SiteFooter() {
   return (
     <footer className="w-full border-t bg-background">
       <Shell as="div">
-        <section className="mx-20 text-sm text-muted-foreground">
+        <section className=" text-sm text-muted-foreground">
           <ul className="justify-center gap-x-6 flex">
             {siteConfig.footer.map((item) => (
               <div key={item.title} className="space-y-3">
