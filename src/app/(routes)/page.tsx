@@ -1,11 +1,13 @@
 import { Shell } from "@/components/Shells/shell";
-import { siteConfig } from "@/config/site-config"
-import getProduct from "../action/get-product";
+import { siteConfig } from "@/config/site-config";
+import { getProducts } from "./products/page";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Product } from "@/types";
+
 export default async function HomePage() {
-  const data  = await getProduct()
+  const data = (await getProducts()) as Product[];
   const products = data.slice(0, 4);
   return (
     <Shell as="div" className="gap-12">
@@ -42,4 +44,4 @@ export default async function HomePage() {
       </section>
     </Shell>
   );
-};
+}
