@@ -50,11 +50,11 @@ export const siteConfig = {
     {
       title: "Twitter",
       href: links.twitter,
-      external: "true",
+      external: true,
     },
     {
       title: "Github",
-      href: links.discord,
+      href: links.github,
       external: true,
     },
     {
